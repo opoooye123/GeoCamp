@@ -1,0 +1,70 @@
+<% layout('./layouts/boilerplate')%>
+
+    <div class="form-container">
+
+
+        <h2>Create Campground</h2>
+
+
+        <form action="/campgrounds" method="post" class="row g-3 needs-validation" novalidate>
+            <div class="col-md-6">
+                <label for="validationCustom01" class="form-label">Title</label>
+                <input type="text" class="form-control" name="title" id="validationCustom01" required>
+                <div class="invalid-feedback">
+                    Please Input Title
+                </div>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Location</label>
+                <input type="text" class="form-control" id="location" name="location" required>
+                <div class="invalid-feedback">
+                    Please Input Location
+                </div>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+            <div class="col-12">
+                <label class="form-label">Image Url</label>
+                <input type="text" class="form-control" name="image" id="image" placeholder="Ex: http://imglink"
+                    required>
+                <div class="invalid-feedback">
+                    Image Url needed
+                </div>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <label class="form-label">Price</label>
+                <input type="text" class="form-control" id="price" name="Price" placeholder="$0.00" required>
+                <div class="invalid-feedback">
+                    Invalid Price
+                </div>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <div class="col-12">
+                <label for="inputAddress" class="form-label">Description</label>
+                <textarea type="text" class="form-control" id="inputAddress" name="description" required></textarea>
+                <div class="invalid-feedback">
+                    Description can't be black
+                </div>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-success">Create</button>
+            </div>
+        </form>
+    </div>
+    </body>
+
+    </html>

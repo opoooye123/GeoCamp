@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eyes Of God's</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #e0f7f1, #d3e5ff);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            /* background-image: url(); */
+        }
+
+        h1 {
+            background-color: #2e8b57;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            margin: 0;
+            font-size: 36px;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .campground-list {
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .campground-item {
+            background-color: #ffffff;
+            margin-bottom: 20px;
+            padding: 20px 25px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s ease;
+        }
+
+        .campground-item:hover {
+            transform: translateY(-3px);
+        }
+
+        .campground-link {
+            text-decoration: none;
+            color: #2e8b57;
+            font-weight: 600;
+            font-size: 20px;
+        }
+
+        .campground-link:hover {
+            color: #1e5d3a;
+        }
+
+        form {
+            margin: 0;
+        }
+
+        .delete-button {
+            background-color: #e74c3c;
+            border: none;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .edit-button {
+            background-color: #20b2aa;
+            border: none;
+            text-decoration: none;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .delete-button:hover {
+            background-color: #c0392b;
+        }
+
+        .new-btn {
+            background: lightgreen;
+            color: white;
+            border: none;
+            text-decoration: none;
+            padding: 16px;
+            border-radius: 9px;
+            font-weight: bolder;
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Domains</h1>
+    <div class="campground-list">
+        <% for (let campgrounds of campground) { %>
+            <div class="campground-item">
+                <a class="campground-link" href="/campgrounds/<%= campgrounds._id %>">
+                    <%= campgrounds.title %>
+                </a>
+                <div>
+                    <form action="/campgrounds/<%= campgrounds._id %>?_method=DELETE" method="POST">
+                        <button class="delete-button">Delete</button>
+                    </form>
+                    <br>
+                    <a href="/campgrounds/<%= campgrounds._id %>/edit" class="edit-button">Edit</a>
+                </div>
+            </div>
+            <% } %>
+                <a class="new-btn" href="/campgrounds/new">Add Campground✅</a>
+    </div>
+</body>
+
+</html>
