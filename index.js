@@ -5,6 +5,7 @@ const ejsMate = require('ejs-mate')
 const mongoose = require('mongoose');
 const methodoverride = require('method-override')
 const Campground = require('./models/campground')
+const serverless = require('serverless-http')
 
 
 mongoose.connect('mongodb://127.0.0.1:27017/Yelpcamp')
@@ -57,6 +58,12 @@ app.delete('/campgrounds/:id', async (req, res) => {
 app.get('/', (req, res) => {
     res.render('campground/home')
 })
-app.listen(3000, () => {
-    console.log('listening at port 3000')
-})
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
+
+
+
+module.exports = app
+module.exports.handler = serverless(app)
