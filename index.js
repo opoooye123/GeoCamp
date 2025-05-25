@@ -8,7 +8,8 @@ const Campground = require('./models/campground')
 const serverless = require('serverless-http')
 
 
-mongoose.connect('mongodb://127.0.0.1:27017/Yelpcamp')
+require('dotenv').config({ path: path.join(__dirname, '.env') })
+mongoose.connect(process.env.MONGODB_URI)
     .then(res => {
         console.log('connected')
     })
