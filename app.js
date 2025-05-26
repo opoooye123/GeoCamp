@@ -21,7 +21,7 @@ const seedDB = async () => {
             title: `${sample(places)}, ${sample(descriptors)}`,
             image: 'https://picsum.photos/seed/picsum/200/300',
             description: 'Lorem ipsum dolor etsum perish labasco',
-            price
+            Price: price
         })
         await camp.save();
     }

@@ -9,7 +9,7 @@ const Campground = require('./models/campground')
 const serverless = require('serverless-http')
 
 require('dotenv').config({ path: path.join(__dirname, '.env') })
-mongoose.connect(process.env.MONGODB_URI)
+mongoose.connect('mongodb://localhost:27017/Yelpcamp')
     .then(res => {
         console.log('connected')
     })
@@ -35,6 +35,9 @@ app.get('/campgrounds/new', (req, res) => {
 app.post('/campgrounds', async (req, res, next) => {
     try {
         const newcamp = new Campground(req.body);
+        if (newcamp.image.length < 20) {
+            throw new Error('Invalid Image')
+        }
     await newcamp.save();
     res.redirect(`/campgrounds/${newcamp._id}`)
     } catch (e) {
