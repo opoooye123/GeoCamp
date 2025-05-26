@@ -1,15 +1,15 @@
 const express = require('express');
 const app = express();
 const path = require('path')
+
 const ejsMate = require('ejs-mate')
 const mongoose = require('mongoose');
 const methodoverride = require('method-override')
 const Campground = require('./models/campground')
 const serverless = require('serverless-http')
 
-
 require('dotenv').config({ path: path.join(__dirname, '.env') })
-mongoose.connect(process.env.MONGODB_URI)
+mongoose.connect('mongodb://localhost:27017/Yelpcamp')
     .then(res => {
         console.log('connected')
     })
@@ -64,7 +64,9 @@ app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
 
-
+app.use((err, req, res, next) => {
+    res.render('campground/loading')
+})
 
 module.exports = app
 module.exports.handler = serverless(app)
