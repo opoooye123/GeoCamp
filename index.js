@@ -32,13 +32,13 @@ app.get('/campgrounds/new', (req, res) => {
 
     res.render('campground/new',)
 })
-app.post('/campgrounds', async (req, res) => {
+app.post('/campgrounds', async (req, res, next) => {
     try {
         const newcamp = new Campground(req.body);
     await newcamp.save();
     res.redirect(`/campgrounds/${newcamp._id}`)
     } catch (e) {
-
+        next(e)
     }
 })
 app.get('/campgrounds/:id', async (req, res) => {
