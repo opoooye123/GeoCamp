@@ -9,7 +9,7 @@ const Campground = require('./models/campground')
 const serverless = require('serverless-http')
 
 require('dotenv').config({ path: path.join(__dirname, '.env') })
-mongoose.connect('mongodb://localhost:27017/Yelpcamp')
+mongoose.connect(process.env.MONGODB_URI)
     .then(res => {
         console.log('connected')
     })
@@ -33,9 +33,13 @@ app.get('/campgrounds/new', (req, res) => {
     res.render('campground/new',)
 })
 app.post('/campgrounds', async (req, res) => {
-    const newcamp = new Campground(req.body);
+    try {
+        const newcamp = new Campground(req.body);
     await newcamp.save();
     res.redirect(`/campgrounds/${newcamp._id}`)
+    } catch (e) {
+
+    }
 })
 app.get('/campgrounds/:id', async (req, res) => {
     const campShow = await Campground.findById(req.params.id);
