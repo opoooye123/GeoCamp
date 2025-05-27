@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path')
-
+const Asynchandler = require('./utils/AsyncHandler.js')
 const ejsMate = require('ejs-mate')
 const mongoose = require('mongoose');
 const methodoverride = require('method-override')
@@ -9,7 +9,7 @@ const Campground = require('./models/campground')
 const serverless = require('serverless-http')
 
 require('dotenv').config({ path: path.join(__dirname, '.env') })
-mongoose.connect('mongodb://localhost:27017/Yelpcamp')
+mongoose.connect(process.env.MONGODB_URI)
     .then(res => {
         console.log('connected')
     })
@@ -32,18 +32,14 @@ app.get('/campgrounds/new', (req, res) => {
 
     res.render('campground/new',)
 })
-app.post('/campgrounds', async (req, res, next) => {
-    try {
+app.post('/campgrounds', Asynchandler(async (req, res, next) => {
         const newcamp = new Campground(req.body);
         if (newcamp.image.length < 20) {
             throw new Error('Invalid Image')
         }
     await newcamp.save();
     res.redirect(`/campgrounds/${newcamp._id}`)
-    } catch (e) {
-        next(e)
-    }
-})
+}))
 app.get('/campgrounds/:id', async (req, res) => {
     const campShow = await Campground.findById(req.params.id);
     console.log(campShow)

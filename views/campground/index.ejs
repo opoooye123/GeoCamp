@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Eyes Of God's</title>
     <style>
         body {
@@ -17,112 +17,188 @@
         h1 {
             background-color: #2e8b57;
             color: white;
-            padding: 30px;
+            padding: 30px 20px;
             text-align: center;
             margin: 0;
-            font-size: 36px;
-            letter-spacing: 1px;
+            font-size: 40px;
+            letter-spacing: 2px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            animation: fadeInDown 0.8s ease-in-out;
         }
 
         .campground-list {
-            max-width: 700px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
             margin: 40px auto;
             padding: 0 20px;
+            animation: fadeInUp 1s ease;
         }
 
         .campground-item {
-            background-color: #ffffff;
-            margin-bottom: 20px;
-            padding: 20px 25px;
-            border-radius: 12px;
+            background-color: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-            transition: transform 0.2s ease;
+            flex-direction: column;
+            position: relative;
         }
 
         .campground-item:hover {
-            transform: translateY(-3px);
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .campground-item img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .campground-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .campground-content {
+            padding: 16px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex-grow: 1;
         }
 
         .campground-link {
             text-decoration: none;
             color: #2e8b57;
-            font-weight: 600;
-            font-size: 20px;
+            font-weight: 700;
+            font-size: 22px;
+            margin-bottom: 10px;
+            transition: color 0.3s;
         }
 
         .campground-link:hover {
-            color: #1e5d3a;
+            color: #1c5d3d;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: auto;
         }
 
         form {
             margin: 0;
         }
 
-        .delete-button {
-            background-color: #e74c3c;
+        .delete-button,
+        .edit-button {
+            padding: 8px 14px;
             border: none;
-            color: white;
-            padding: 10px 16px;
             border-radius: 8px;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: bold;
             cursor: pointer;
+            color: white;
+            text-decoration: none;
             transition: background 0.3s ease;
         }
 
-        .edit-button {
-            background-color: #20b2aa;
-            border: none;
-            text-decoration: none;
-            color: white;
-            padding: 10px 16px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
+        .delete-button {
+            background-color: #e74c3c;
         }
 
         .delete-button:hover {
             background-color: #c0392b;
         }
 
+        .edit-button {
+            background-color: #20b2aa;
+        }
+
+        .edit-button:hover {
+            background-color: #178f88;
+        }
+
         .new-btn {
-            background: lightgreen;
+            display: block;
+            width: fit-content;
+            margin: 50px auto;
+            background: #28a745;
             color: white;
+            padding: 14px 24px;
+            font-size: 18px;
+            font-weight: bold;
             border: none;
+            border-radius: 10px;
             text-decoration: none;
-            padding: 16px;
-            border-radius: 9px;
-            font-weight: bolder;
-            display: flex;
-            justify-content: center;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .new-btn:hover {
+            background: #218838;
+            transform: scale(1.05);
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 28px;
+            }
+
+            .campground-link {
+                font-size: 18px;
+            }
         }
     </style>
 </head>
 
 <body>
-    <h1>Domains</h1>
+    <h1>🌿 Eyes Of God's Domains</h1>
     <div class="campground-list">
         <% for (let campgrounds of campground) { %>
             <div class="campground-item">
-                <a class="campground-link" href="/campgrounds/<%= campgrounds._id %>">
-                    <%= campgrounds.title %>
-                </a>
-                <div>
-                    <form action="/campgrounds/<%= campgrounds._id %>?_method=DELETE" method="POST">
-                        <button class="delete-button">Delete</button>
-                    </form>
-                    <br>
-                    <a href="/campgrounds/<%= campgrounds._id %>/edit" class="edit-button">Edit</a>
+                <img src="<%= campgrounds.image %>" alt="Campground Image">
+                <div class="campground-content">
+                    <a class="campground-link" href="/campgrounds/<%= campgrounds._id %>">
+                        <%= campgrounds.title %>
+                    </a>
+                    <div class="action-buttons">
+                        <form action="/campgrounds/<%= campgrounds._id %>?_method=DELETE" method="POST">
+                            <button class="delete-button">Delete</button>
+                        </form>
+                        <a href="/campgrounds/<%= campgrounds._id %>/edit" class="edit-button">Edit</a>
+                    </div>
                 </div>
             </div>
-            <% } %>
-                <a class="new-btn" href="/campgrounds/new">Add Campground✅</a>
+        <% } %>
     </div>
+    <a class="new-btn" href="/campgrounds/new">➕ Add New Campground</a>
 </body>
 
 </html>
