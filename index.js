@@ -5,11 +5,12 @@ const Asynchandler = require('./utils/AsyncHandler.js')
 const ejsMate = require('ejs-mate')
 const mongoose = require('mongoose');
 const methodoverride = require('method-override')
-const Campground = require('./models/campground')
-const serverless = require('serverless-http')
+const Campground = require('./models/campground');
+const ExpressError = require('./utils/ExpressError.js');
+
 
 require('dotenv').config({ path: path.join(__dirname, '.env') })
-mongoose.connect(process.env.MONGODB_URI)
+mongoose.connect('mongodb://localhost:27017/Yelpcamp')
     .then(res => {
         console.log('connected')
     })
@@ -62,14 +63,15 @@ app.delete('/campgrounds/:id', async (req, res) => {
 app.get('/', (req, res) => {
     res.render('campground/home')
 })
+app.all('/{*any}', (req, res, next) => {
+    next(new ExpressError('Page Not Found', 404))
+})
+app.use((err, req, res, next) => {
+    const { message = 'something went wrong', statusCode = 500 } = err;
+    res.status(statusCode).send(message)
+})      
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
-
-app.use((err, req, res, next) => {
-    res.render('campground/loading')
-})
-
-module.exports = app
-module.exports.handler = serverless(app)
