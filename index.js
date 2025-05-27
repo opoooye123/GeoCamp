@@ -34,6 +34,9 @@ app.get('/campgrounds/new', (req, res) => {
     res.render('campground/new',)
 })
 app.post('/campgrounds', Asynchandler(async (req, res, next) => {
+    if (!req.body.Campground) {
+        throw new ExpressError('Invalid Campground Data', 400);
+    }
         const newcamp = new Campground(req.body);
         if (newcamp.image.length < 20) {
             throw new Error('Invalid Image')
