@@ -10,7 +10,7 @@ const ExpressError = require('./utils/ExpressError.js');
 
 
 require('dotenv').config({ path: path.join(__dirname, '.env') })
-mongoose.connect('mongodb://localhost:27017/Yelpcamp')
+mongoose.connect(process.env.MONGODB_URI)
     .then(res => {
         console.log('connected')
     })
